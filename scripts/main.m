@@ -9,7 +9,7 @@ posProbe = [constants.earthOrbitRadius+constants.earthRadius+constants.probeInti
 for t = 1:length(time)
     [posEarth, posMars] = postionsCalcPlanets(constans, t);
 
-    posNewProbe = calculateProbeTrajectory(posEarth, posMars, posProbe);
+    posNewProbe = calculateProbePos(posEarth, posMars, posProbe);
     
     posProbe = posNewProbe;
 
