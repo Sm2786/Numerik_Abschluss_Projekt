@@ -1,4 +1,4 @@
-function force_vector = calculateSunGravitationalField(pos, mass_object)
+function force_vector = calculateSunGravitationalField(constants, pos, mass_object)
 
     r_vector = sun_position - pos;
     r_magnitude = norm(r_vector);

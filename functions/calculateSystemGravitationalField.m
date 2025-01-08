@@ -1,4 +1,4 @@
-function force_vector = calculateSystemGravitationalField(object_position, object_mass, planet_position, planet_mass)
+function force_vector = calculateSystemGravitationalField(constants, object_position, object_mass, planet_position, planet_mass)
     r_vector = planet_position - object_position;
     r_magnitude = norm(r_vector);
     if r_magnitude == 0
