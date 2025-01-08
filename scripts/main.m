@@ -1,3 +1,4 @@
+clear all
 % Load constants
 load('data/constants.mat');
 

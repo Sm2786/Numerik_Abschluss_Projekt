@@ -30,7 +30,7 @@ function [earthOrbit, marsOrbit] = modelSolarSystem(constants)  %Zeit input
     hold on;
     plot(earthOrbit(:, 1), earthOrbit(:, 2), 'b', 'DisplayName', 'Earth Orbit');
     plot(marsOrbit(:, 1), marsOrbit(:, 2), 'r', 'DisplayName', 'Mars Orbit');
-    plot(0, 0, 'yo', 'MarkerSize', 10,'MarkerFaceColor', 'yellow', 'DisplayName', 'Sun'); % Sun at origin
+    plot(0, 0, 'yo', 'MarkerSize', 10,'MarkerFaceColor',  DisplayName', 'Sun'); % Sun at origin
     axis equal;
     grid on;
     legend;
