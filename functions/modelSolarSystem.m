@@ -30,7 +30,7 @@ function [earthOrbit, marsOrbit] = modelSolarSystem(constants)  %Zeit input
     hold on;
     plot(earthOrbit(:, 1), earthOrbit(:, 2), 'b', 'DisplayName', 'Earth Orbit');
     plot(marsOrbit(:, 1), marsOrbit(:, 2), 'r', 'DisplayName', 'Mars Orbit');
-    plot(0, 0, 'yo', 'MarkerSize', 10, 'DisplayName', 'Sun'); % Sun at origin
+    plot(0, 0, 'yo', 'MarkerSize', 10,'MarkerFaceColor', 'yellow', 'DisplayName', 'Sun'); % Sun at origin
     axis equal;
     grid on;
     legend;
@@ -38,16 +38,12 @@ function [earthOrbit, marsOrbit] = modelSolarSystem(constants)  %Zeit input
     xlabel('x (km)');
     ylabel('y (km)');
 
-    % Animation der Planetenbewegung
-    for i = 1:length(time)
-        earth = plot(earthOrbit(i,1), earthOrbit(i,2), 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'blue'); % Erde
-        mars = plot(marsOrbit(i,1), marsOrbit(i,2), 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'red'); % Mars
-        pause(0.01); % Pause für Animation
-        %if i < length(time)
-            %delete(findobj(gca, 'MarkerFaceColor', 'blue')); % Erde entfernen
-            %delete(findobj(gca, 'MarkerFaceColor', 'red')); % Mars entfernen
-        %end
-        delete(earth);
-        delete(mars)
+   % Animation
+    earth = plot(earthOrbit(1,1), earthOrbit(1,2), 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'blue');
+    mars = plot(marsOrbit(1,1), marsOrbit(1,2), 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'red');
+    for i = 2:length(time)
+        set(earth, 'XData', earthOrbit(i,1), 'YData', earthOrbit(i,2));
+        set(mars, 'XData', marsOrbit(i,1), 'YData', marsOrbit(i,2));
+        pause(0.01);
     end
 end
