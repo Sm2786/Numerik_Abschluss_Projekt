@@ -9,6 +9,7 @@ constants.sunMass = 1.989e30; %kg
 
 constants.probeMass = 10000; %kg SpaceX Dragon
 constants.probeIntialOrbitHeight = 35000; %km
+constants.probeIntialVelocity = 15; %km/s
 
 constants.G = 6.67430e-20;
 
