@@ -39,15 +39,14 @@ function [earthOrbit, marsOrbit] = modelSolarSystem(constants)  %Zeit input
     ylabel('y (km)');
 
     % Animation der Planetenbewegung
-    for i = 1:length(time)
-        earth = plot(earthOrbit(i,1), earthOrbit(i,2), 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'blue'); % Erde
-        mars = plot(marsOrbit(i,1), marsOrbit(i,2), 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'red'); % Mars
-        pause(0.01); % Pause für Animation
-        %if i < length(time)
-            %delete(findobj(gca, 'MarkerFaceColor', 'blue')); % Erde entfernen
-            %delete(findobj(gca, 'MarkerFaceColor', 'red')); % Mars entfernen
-        %end
-        delete(earth);
-        delete(mars)
+for i = 1:length(time)
+    plot(earthOrbit(i,1) / earthRadius, earthOrbit(i,2) / earthRadius, 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'blue'); % Erde
+    plot(marsOrbit(i,1) / earthRadius, marsOrbit(i,2) / earthRadius, 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'red'); % Mars
+    pause(0.01); % Pause für Animation
+    if i < leng
+        delete(findobj(gca, 'MarkerFaceColor', 'blue')); % Erde entfernen
+        delete(findobj(gca, 'MarkerFaceColor', 'red')); % Mars entfernen
     end
+
+    hold off;
 end
