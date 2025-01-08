@@ -19,8 +19,5 @@ position_earth(2, 1) = earthRadius * sin(theta);
 
 theta = marsOmega * time;
 position_mars(1, 1) = marsRadius * cos(theta);
-position_mars(2, 1) = marsRadius * sin(theta);S
-
-position_earth
-position_mars
+position_mars(2, 1) = marsRadius * sin(theta);
 end
