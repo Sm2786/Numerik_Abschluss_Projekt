@@ -1,12 +1,23 @@
-% Define constants
-constants.earthRadius = 149.6e6;      % Earth's orbital radius in km
-constants.marsRadius = 227.9e6;       % Mars's orbital radius in km
-constants.earthPeriod = 365.25;       % Earth's orbital period in days
-constants.marsPeriod = 687;           % Mars's orbital period in days
-constants.simulationTime = 1000;      % Simulation duration in days
-constants.timeStep = 1;               % Time step in days
+constants.earthOrbitRadius = 149.6e6; %km
+constants.earthRadius = 6357; %km
+constants.earthPeriod = 365.25; %T
 
-% Save constants to a .mat file
+constants.marsOrbitRadius = 227.9e6; %km
+constants.marsPeriod = 687; %T
+
+constants.sunMass = 1.989e30; %kg
+
+constants.sondeMass = 10000; %kg SpaceX Dragon
+
+constants.G = 6.67430e-20;
+
+
+
+constants.simulationTime = 365.25;
+constants.timeStep = 1;
+
+
+
 save('data/constants.mat', 'constants');
 
 disp('Constants saved to data/constants.mat');
