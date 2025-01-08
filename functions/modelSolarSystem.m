@@ -1,4 +1,4 @@
-function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSystem(constants, input_day)  %Zeit input
+function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSystem(constants)  %Zeit input
    
     earthRadius = constants.earthOrbitRadius;
     marsRadius = constants.marsOrbitRadius;
@@ -26,8 +26,6 @@ function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSyst
         marsOrbit(i, 2) = marsRadius * sin(theta);
     end
 
-    position_earth = earthOrbit(input_day, :)
-    position_mars = marsOrbit(input_day, :)
 
     figure;
     hold on;
