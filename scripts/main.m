@@ -3,7 +3,7 @@ clear all
 load('data/constants.mat');
 
 % Model the solar system
-[earthOrbit, marsOrbit] = modelSolarSystem(constants);
+[earthOrbit, marsOrbit] = modelSolarSystem(constants, 30);
 
 % Compute gravitational fields
 gFieldSun = calculateSunGravitationalField(pos, sunData);

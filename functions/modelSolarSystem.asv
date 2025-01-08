@@ -1,7 +1,7 @@
-function [earthOrbit, marsOrbit] = modelSolarSystem(constants)  %Zeit input
+function [earthOrbit, marsOrbit, positions] = modelSolarSystem(constants, input_day)  %Zeit input
    
-    earthRadius = constants.earthRadius;
-    marsRadius = constants.marsRadius;
+    earthRadius = constants.earthOrbitRadius;
+    marsRadius = constants.marsOrbitRadius;
     earthPeriod = constants.earthPeriod;
     marsPeriod = constants.marsPeriod;
     simulationTime = constants.simulationTime;
@@ -26,11 +26,13 @@ function [earthOrbit, marsOrbit] = modelSolarSystem(constants)  %Zeit input
         marsOrbit(i, 2) = marsRadius * sin(theta);
     end
 
+    pos
+
     figure;
     hold on;
     plot(earthOrbit(:, 1), earthOrbit(:, 2), 'b', 'DisplayName', 'Earth Orbit');
     plot(marsOrbit(:, 1), marsOrbit(:, 2), 'r', 'DisplayName', 'Mars Orbit');
-    plot(0, 0, 'yo', 'MarkerSize', 10,'MarkerFaceColor',  DisplayName', 'Sun'); % Sun at origin
+    plot(0, 0, 'yo', 'MarkerSize', 10,'MarkerFaceColor', 'yellow', 'DisplayName', 'Sun'); % Sun at origin
     axis equal;
     grid on;
     legend;
