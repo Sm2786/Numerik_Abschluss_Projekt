@@ -1,4 +1,4 @@
-function [position_earth,position_mars] = positionCalcPlanets(constants, time)
+function [position_earth,position_mars] = positionsCalcPlanets(constants, time)
 %Function to calculate the position of earth and mars at a wanted time
 earthRadius = constants.earthOrbitRadius;
 marsRadius = constants.marsOrbitRadius;
@@ -19,7 +19,7 @@ position_earth(2, 1) = earthRadius * sin(theta);
 
 theta = marsOmega * time;
 position_mars(1, 1) = marsRadius * cos(theta);
-position_mars(2, 1) = marsRadius * sin(theta);
+position_mars(2, 1) = marsRadius * sin(theta);S
 
 position_earth
 position_mars
