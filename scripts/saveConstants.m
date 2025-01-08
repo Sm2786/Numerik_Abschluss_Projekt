@@ -7,7 +7,8 @@ constants.marsPeriod = 687; %T
 
 constants.sunMass = 1.989e30; %kg
 
-constants.sondeMass = 10000; %kg SpaceX Dragon
+constants.probeMass = 10000; %kg SpaceX Dragon
+constants.probeIntialOrbitHeight = 35000; %km
 
 constants.G = 6.67430e-20;
 
