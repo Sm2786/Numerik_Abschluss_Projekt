@@ -2,21 +2,15 @@ clear all
 % Load constants
 load('data/constants.mat');
 
-% Model the solar system
-[earthOrbit, marsOrbit] = modelSolarSystem(constants);
+time = 0:constants.timeStep:constants.simulationTime;
 
-% Compute gravitational fields
-gFieldSun = calculateSunGravitationalField(pos, sunData);
-gFieldSystem = calculateSystemGravitationalField(pos, [sunData, earthData, marsData]);
+posProbe = [constants.earthOrbitRadius+constants.earthRadius+constants.probeIntialOrbitHeight,0];
 
-% Calculate probe trajectory
-trajectory = calculateProbeTrajectory(v0, duration, gFieldSystem);
+for t = 1:length(time)
+    [posEarth, posMars] = modelSolarSystem(constans, t);
 
-% Trajectory 1: Mars arrival velocity
-[vRequired, flightDuration] = computeMarsTrajectory1();
+    posNewProbe = calculateProbeTrajectory(posEarth, posMars, posProbe);
+    
+    posProbe = posNewProbe;
 
-% Trajectory 2: Mars lower velocity
-[startAngle, flightDuration] = computeMarsTrajectory2();
-
-% Plot results
-plotTrajectories(earthOrbit, marsOrbit, trajectory);
+end
