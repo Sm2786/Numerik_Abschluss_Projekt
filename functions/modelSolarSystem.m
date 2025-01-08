@@ -1,51 +1,31 @@
 function [earthOrbit, marsOrbit] = modelSolarSystem(constants)
-    % modelSolarSystem - Simulates the circular orbits of Earth and Mars around the Sun
-    %
-    % Inputs:
-    %   constants - Struct containing necessary constants such as:
-    %               - earthRadius (in km)
-    %               - marsRadius (in km)
-    %               - earthPeriod (in days)
-    %               - marsPeriod (in days)
-    %               - simulationTime (in days)
-    %               - timeStep (in days)
-    %
-    % Outputs:
-    %   earthOrbit - Nx2 matrix of Earth's (x, y) positions over time (in km)
-    %   marsOrbit - Nx2 matrix of Mars's (x, y) positions over time (in km)
 
-    % Extract constants
-    earthRadius = constants.earthRadius; % Semi-major axis of Earth's orbit (km)
-    marsRadius = constants.marsRadius;   % Semi-major axis of Mars's orbit (km)
-    earthPeriod = constants.earthPeriod; % Orbital period of Earth (days)
-    marsPeriod = constants.marsPeriod;   % Orbital period of Mars (days)
-    simulationTime = constants.simulationTime; % Total simulation time (days)
-    timeStep = constants.timeStep;       % Simulation time step (days)
+    earthRadius = constants.earthRadius;
+    marsRadius = constants.marsRadius;
+    earthPeriod = constants.earthPeriod;
+    marsPeriod = constants.marsPeriod;
+    simulationTime = constants.simulationTime;
+    timeStep = constants.timeStep;
 
-    % Time vector
-    time = 0:timeStep:simulationTime; % Time steps for simulation
+    time = 0:timeStep:simulationTime;
 
-    % Angular velocities (rad/day)
     earthOmega = 2 * pi / earthPeriod;
     marsOmega = 2 * pi / marsPeriod;
 
-    % Calculate Earth's orbit
-    earthOrbit = zeros(length(time), 2); % Initialize position matrix
+    earthOrbit = zeros(length(time), 2);
     for i = 1:length(time)
-        theta = earthOmega * time(i); % Angle at time t
-        earthOrbit(i, 1) = earthRadius * cos(theta); % x-coordinate
-        earthOrbit(i, 2) = earthRadius * sin(theta); % y-coordinate
+        theta = earthOmega * time(i);
+        earthOrbit(i, 1) = earthRadius * cos(theta);
+        earthOrbit(i, 2) = earthRadius * sin(theta);
     end
 
-    % Calculate Mars's orbit
-    marsOrbit = zeros(length(time), 2); % Initialize position matrix
+    marsOrbit = zeros(length(time), 2);
     for i = 1:length(time)
-        theta = marsOmega * time(i); % Angle at time t
-        marsOrbit(i, 1) = marsRadius * cos(theta); % x-coordinate
-        marsOrbit(i, 2) = marsRadius * sin(theta); % y-coordinate
+        theta = marsOmega * time(i);
+        marsOrbit(i, 1) = marsRadius * cos(theta);
+        marsOrbit(i, 2) = marsRadius * sin(theta);
     end
 
-    % Plot the orbits
     figure;
     hold on;
     plot(earthOrbit(:, 1), earthOrbit(:, 2), 'b', 'DisplayName', 'Earth Orbit');
