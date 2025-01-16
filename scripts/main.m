@@ -1,16 +1,12 @@
 clear all
 % Load constants
 load('data/constants.mat');
+%load('functions\calculateSunGravitationalField.m')
 
 time = 0:constants.timeStep:constants.simulationTime;
 
-posProbe = [constants.earthOrbitRadius+constants.earthRadius+constants.probeIntialOrbitHeight,0];
+[t, u] = ode45(@(t, pos) calculateSunGravitationalField(constants, pos), time, ...
+               [(constants.earthOrbitRadius + constants.probeIntialOrbitHeight) 0 0 constants.probeIntialVelocity]);
+figure;
+plot(u(:,1), u(:,2))
 
-for t = 1:length(time)
-    [posEarth, posMars] = postionsCalcPlanets(constans, t);
-
-    posNewProbe = calculateProbePos(posEarth, posMars, posProbe);
-    
-    posProbe = posNewProbe;
-
-end

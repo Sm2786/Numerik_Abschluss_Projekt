@@ -1,16 +1,18 @@
 clear all
 % Load constants
 load('data/constants.mat');
+%load('functions\calculateSunGravitationalField.m')
 
 time = 0:constants.timeStep:constants.simulationTime;
 
-posProbe = [constants.earthOrbitRadius+constants.earthRadius+constants.probeIntialOrbitHeight,0];
-
-for t = 1:length(time)
-    [posEarth, posMars] = postionsCalcPlanets(constans, t);
-
-    posNewProbe = calculateProbeTrajectory(posEarth, posMars, posProbe);
-    
-    posProbe = posNewProbe;
-
-end
+[t, u] = ode45(@(t, pos) calculateSunGravitationalField(constants, pos), time, ...
+               [(constants.earthOrbitRadius + constants.probeIntialOrbitHeight) 0 0 constants.probeIntialVelocity]);
+figure;
+plot(u(1,:))
+xlim([0 400]); % Anpassen des x-Bereichs
+ylim([0 5e165]); % Anpassen des y-Bereichs
+xlabel('Zeit (Sekunden)');
+ylabel('Wert');
+title('Simulation der Bewegung');
+grid on;
+set(gca, 'YScale', 'log'); % Optional: Logarithmische Skala

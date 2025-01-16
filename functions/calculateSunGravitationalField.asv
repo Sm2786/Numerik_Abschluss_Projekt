@@ -1,0 +1,4 @@
+function uPunkt = calculateSunGravitationalField(constants, pos)
+u = pos;  
+uPunkt = ((constants.G .*constants.sunMass)/sqrt(u(1)^2+u(2)^2)).*u;
+end
