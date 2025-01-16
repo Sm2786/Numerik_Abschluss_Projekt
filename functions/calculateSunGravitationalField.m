@@ -1,7 +1,8 @@
 function uPunkt = calculateSunGravitationalField(constants, pos)
-u = pos; 
-c = ((constants.G .* constants.sunMass)/(norm(u(1:2)))^3);
+u = pos;
+distance = norm(u(1:2));
+c = -((constants.G .* constants.sunMass)/(distance^3));
  
-uPunkt = [u(1:2);
+uPunkt = [u(3:4);
            c.*u(1:2)];
 end
