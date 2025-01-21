@@ -1,4 +1,4 @@
-function uPunkt = calculateSunGravitationalField(constants, pos)
+function uPunkt = calculateTrajectory(constants, pos)
 u = pos;
 distance = norm(u(1:2));
 c = -((constants.G .* constants.sunMass)/(distance^3));
