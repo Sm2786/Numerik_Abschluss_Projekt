@@ -8,7 +8,7 @@ options = odeset('RelTol', 1e-13, 'AbsTol', 1e-16 * ones(size(pos0)));
 [t, u] = ode45(@(t, pos) calculateTrajectory(constants,pos), tSpan, pos0, options);
 %figure;
 
-v = fminsearch(@Trajektorie1,[50 50])
+v = fmin
 
 
 % Plot der Ergebnisse

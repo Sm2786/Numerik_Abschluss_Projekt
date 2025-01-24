@@ -22,8 +22,8 @@ function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSyst
     marsOrbit = zeros(length(time), 2);
     for i = 1:length(time)
         theta = marsOmega * time(i);
-        marsOrbit(i, 1) = marsRadius * cos(theta);
-        marsOrbit(i, 2) = marsRadius * sin(theta);
+        marsOrbit(i, 1) = -marsRadius * cos(theta);
+        marsOrbit(i, 2) = -marsRadius * sin(theta);
     end
 
 
