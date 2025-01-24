@@ -1,4 +1,4 @@
-function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSystem(constants)  %Zeit input
+function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSystem(constants) 
    
     earthRadius = constants.earthOrbitRadius;
     marsRadius = constants.marsOrbitRadius;

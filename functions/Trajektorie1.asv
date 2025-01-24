@@ -1,0 +1,12 @@
+function abstand = Trajektorie1(v0, constants)
+pos0 = [constants.earthOrbitRadius + constants.earthRadius, 0, 0, v0 + constants.earthVelocity];
+tSpan = [0, constants.simulationTime + 2000 *24 * 3600]; %Umrechung auf Sekunden
+
+options = odeset('Events', @(t,pos)MarsEncounter(constants, ));
+[t, u] = ode45(@(t, pos) calculateTrajectory(constants, pos), tSpan, pos0, options);
+
+[~, position_mars] = positionsCalcPlanets(constants, t);
+        abstand = norm(u(1:2) - position_mars);
+
+end
+

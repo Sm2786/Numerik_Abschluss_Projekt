@@ -1,13 +1,13 @@
-function [distance_to_mars, stop, dir] = MarsEncounter(t, u, constants)
-    
+function [distance_to_mars_orbit, stop, dir] = MarsEncounter(t, u, constants)
+
+    % Position der Sonde (x, y)
     position_probe = u(1:2);
 
-    [~, position_mars] = positionsCalcPlanets(constants, t);
+    % Abstand der Sonde von der Marsbahn
+    distance_to_mars_orbit = norm(position_probe) - constants.marsOrbitRadius;
 
-    % Abstand zwischen Sonde und Marsbahn
-    distance_to_mars = norm(position_probe - position_mars);
-
-    % Abbruchbedingung: Abstand unterhalb eines Toleranzwerts
-    stop = 1; 
-    dir = 0;  
+    % Abbruchbedingung: Abstand erreicht (oder Annäherung überwachen)
+    stop = 1;  % Stopp der Integration, wenn das Ereignis eintritt
+    dir = 0;   % Ereignis sowohl bei Annäherung als auch Entfernung erkennen
 end
+
