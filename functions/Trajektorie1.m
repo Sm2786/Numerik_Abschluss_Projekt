@@ -1,4 +1,4 @@
-function abstand = Trajektorie1(v0, constants)
+function [abstand, flight_time] = Trajektorie1(v0, constants)
     % Anfangswerte
     pos0 = [constants.earthOrbitRadius + constants.earthRadius, 0, 0, ...
             v0 + constants.earthVelocity];
@@ -12,6 +12,12 @@ function abstand = Trajektorie1(v0, constants)
 
     % Marsposition zum Ereigniszeitpunkt berechnen
     [~, position_mars] = positionsCalcPlanets(constants, te);
+    flight_time = (te/3600)/24;
+    %pos_mars = position_mars
+    %pos_sonde = ue(1:2)
+    %pos_mars_norm = norm(position_mars)
+    %pos_sonde_norm = norm(pos_sonde)
+    
 
     % Abstand zwischen Sonde und Marsbahn
     abstand = norm(ue(1:2) - position_mars);
