@@ -21,6 +21,7 @@ function [abstand, flight_time] = Trajektorie1(v0, constants)
     if isempty(te)
         abstand = Inf;
         v = v0;
+        fprintf("V_0: %.2f\n", v);
     else
         [~, position_mars] = positionsCalcPlanets(constants, te);
         flight_time = (te/3600)/24;
