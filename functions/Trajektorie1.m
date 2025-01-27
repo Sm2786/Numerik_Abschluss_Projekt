@@ -5,7 +5,7 @@ function [abstand, flight_time] = Trajektorie1(v0, constants)
     tSpan = [0, constants.simulationTime + 2000 * 24 * 3600]; % Zeitspanne (in Sekunden)
 
     % Integrationseinstellungen
-    options = odeset('Events', @(t, pos) MarsEncounter(t, pos, constants), 'RelTol', 1e-10, 'AbsTol', 1e-12);
+    options = odeset('Events', @(t, pos) MarsEncounter(t, pos, constants), 'RelTol', 1e-6, 'AbsTol', 1e-8);
 
     % Numerische Lösung der Bewegungsgleichung
     [t, u, te, ue] = ode45(@(t, pos) calculateTrajectory(constants, pos), tSpan, pos0, options);
@@ -20,17 +20,15 @@ function [abstand, flight_time] = Trajektorie1(v0, constants)
 
     if isempty(te)
         abstand = Inf;
-        v = v0
-        return;
+        v = v0;
     else
         [~, position_mars] = positionsCalcPlanets(constants, te);
         flight_time = (te/3600)/24;
+         % Abstand zwischen Sonde und Marsbahn
+         abstand = norm(ue(1:2) - position_mars);
     end
 
 
     
-
-    % Abstand zwischen Sonde und Marsbahn
-    abstand = norm(ue(1:2) - position_mars);
 end
 
