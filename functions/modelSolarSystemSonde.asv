@@ -1,35 +1,23 @@
-function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSystemSonde(constants, t, u, flight_time) 
-   
-    earthRadius = constants.earthOrbitRadius;
-    marsRadius = constants.marsOrbitRadius;
-    earthPeriod = constants.earthPeriod;
-    marsPeriod = constants.marsPeriod;
-    simulationTime = constants.simulationTime;
-    timeStep = constants.timeStep;
+function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSystemSonde(constants, t, u, flight_time)
+    
+    t_planeten = t /(24*3600);
 
-    time = 0:timeStep:simulationTime;
-
-    earthOmega = 2 * pi / earthPeriod;
-    marsOmega = 2 * pi / marsPeriod;
-
-    earthOrbit = zeros(length(time), 2);
-    for i = 1:length(time)
-        theta = earthOmega * time(i);
-        earthOrbit(i, 1) = earthRadius * cos(theta);
-        earthOrbit(i, 2) = earthRadius * sin(theta);
-    end
-
-    marsOrbit = zeros(length(time), 2);
-    for i = 1:length(time)
-        theta = marsOmega * time(i);
-        marsOrbit(i, 1) = -marsRadius * cos(theta);
-        marsOrbit(i, 2) = -marsRadius * sin(theta);
+     % Preallocate arrays for orbits
+    earthOrbit = zeros(length(t_planeten));
+    marsOrbit = [];
+    
+    % Loop through time steps in t_planeten
+    for i = length(t_planeten)
+        t = t_planeten(i);
+        % Calculate positions of Earth and Mars
+        [earth_position, mars_position] = positionsCalcPlanets(constants, t);
+        
+        % Append the positions to the respective orbit arrays
+        earthOrbit = [earthOrbit; earth_position];
+        marsOrbit = [marsOrbit; mars_position];
     end
 
 
-    % Interpolation der Sonde auf die Zeitpunkte von Erde und Mars
-    %t_u = linspace(0, constants.simulationTime, size(u, 1)); % Zeitvektor der Sonde
-    %u_interp = interp1(t_u, u(:, 1:2), time); % Interpolierte Position der Sonde
 
 
     figure;
@@ -53,7 +41,7 @@ function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSyst
     for i = 2:flight_time
         set(earth, 'XData', earthOrbit(i,1), 'YData', earthOrbit(i,2));
         set(mars, 'XData', marsOrbit(i,1), 'YData', marsOrbit(i,2));
-        set(sonde, 'XData', u(i*2,1), 'YData', u(i*25,2));
+        set(sonde, 'XData', u_interp(i,1), 'YData', u_interp(i,2));
         pause(0.01);
     end
 end
