@@ -6,7 +6,21 @@ function uPunkt = calculateTrajectoryPlanets(constants, pos, t)
     c_sonne = -((constants.G * constants.sunMass) / (distance_sun^3));
 
    
-    [position_earth, position_mars] = positionsCalcPlanets(constants, t);
+
+    %Berechnung der Positionen der Planeten
+    position_earth = zeros(2,1);
+    position_mars = zeros(2,1);
+    
+    earthOmega = 2 * pi / constants.earthPeriod;
+    marsOmega = 2 * pi / constants.marsPeriod;
+    
+    theta = earthOmega * t;
+    position_earth(1, 1) = constants.earthRadius * cos(theta);
+    position_earth(2, 1) = constants.earthRadius * sin(theta);
+    
+    theta = marsOmega * t;
+    position_mars(1, 1) = -constants.marsRadius * cos(theta);
+    position_mars(2, 1) = -constants.marsRadius * sin(theta);
 
     % Einfluss der Erde
     vector_earth = u(1:2) - position_earth;
