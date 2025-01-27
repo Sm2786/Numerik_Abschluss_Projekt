@@ -1,24 +1,24 @@
-function [distance_to_mars, stop, dir] = MarsEncounter(t, u, constants)
-    % Position der Sonde (x, y)
+function [value, stop, dir] = MarsEncounter(t, u, constants)
+    % Position of the probe (x, y)
     position_probe = u(1:2);
-    
-    t_tagen = t/(24*3600);
-    % Aktuelle Position des Mars
-    [~, mars_position] = positionsCalcPlanets(constants, t_tagen); % Funktion zur Berechnung der Marsposition
 
-    % Abstand zwischen Sonde und Mars
+    t_tagen = t / (24 * 3600);
+    % Current position of Mars
+    [~, mars_position] = positionsCalcPlanets(constants, t_tagen); % Function to calculate Mars position
+
+    % Distance between the probe and Mars
     distance_to_mars = norm(position_probe - mars_position);
-    %fprintf("Zeit: %.2f s / %.2f t\n", t, t_tagen);
-    %fprintf("Distance to Mars: %.2f\n", distance_to_mars);
 
-    % Ereignis tritt ein, wenn Sonde den Mars genau trifft
-    if distance_to_mars <= constants.marsRadius
-        stop = 1; % Trigger stop event
-        disp("stop");
-    else
-        stop = 0; % Do not stop
-    end
-    dir = 0;   % Erkennung sowohl bei Annäherung als auch bei Entfernung
+    % Define tolerance for encounter
+    tolerance = 1000; % in meters
+
+    % Define the value for the event function (distance - tolerance)
+    value = distance_to_mars - (constants.marsRadius * 1000);
+
+    % Stop the solver when value crosses 0 (within tolerance)
+    stop = 1; % Stop integration when event occurs
+    dir = 0; % Detect only decreasing distances (approaching Mars)
+
+    % Debugging output
+    %fprintf('Time: %.2f, Distance to Mars: %.2f, Event Value: %.2f\n', t, distance_to_mars, value);
 end
-
-
