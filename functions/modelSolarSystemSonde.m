@@ -4,6 +4,7 @@ function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSyst
     t_planeten = t / (24 * 3600);
     
     % Preallocate arrays for orbits
+    %num_steps = round(length(t_planeten)/4);
     num_steps = length(t_planeten);
     earthOrbit = zeros(num_steps, 2); % 2 columns for x and y coordinates
     marsOrbit = zeros(num_steps, 2);
@@ -33,22 +34,23 @@ function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSyst
     xlabel('x (km)');
     ylabel('y (km)');
 
-    % Animation
+    % Preallocate plot objects (already done in your code)
     earth = plot(earthOrbit(1, 1), earthOrbit(1, 2), 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'blue', 'DisplayName', 'Earth');
     mars = plot(marsOrbit(1, 1), marsOrbit(1, 2), 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'red', 'DisplayName', 'Mars');
     sonde = plot(u(1, 1), u(1, 2), 'go', 'MarkerSize', 8, 'MarkerFaceColor', 'green', 'DisplayName', 'Spacecraft');
-
-    for i = 2:num_steps
+    
+    % Fix axis limits for faster rendering
+    axis([-5e8 5e8 -5e8 5e8]);
+    
+    % Loop through animation
+    for i = 2:num_steps  % Use step_size = 10 for faster updates
         % Update positions for animation
         set(earth, 'XData', earthOrbit(i, 1), 'YData', earthOrbit(i, 2));
         set(mars, 'XData', marsOrbit(i, 1), 'YData', marsOrbit(i, 2));
         set(sonde, 'XData', u(i, 1), 'YData', u(i, 2));
         
-        % Check if current time exceeds flight time
-        if t_planeten(i) > flight_time * 24 * 3600
-            break;
-        end
-
-        pause(0.01);
+        
+        drawnow limitrate;
+        pause(0.001);
     end
 end

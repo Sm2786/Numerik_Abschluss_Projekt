@@ -1,7 +1,9 @@
-function [abstand, flight_time] = Trajektorie1(v0, constants)
+function [abstand, flight_time] = Trajektorie2(v_alpha, constants)
     % Anfangswerte
-    pos0 = [constants.earthOrbitRadius + constants.earthRadius, 0, 0, ...
-            v0 + constants.earthVelocity];
+    v0 = v_alpha(1);
+    alpha = v_alpha(2);
+    pos0 = [constants.earthOrbitRadius + constants.earthRadius, 0, v0*sin(alpha), ...
+            v0*cos(alpha) + constants.earthVelocity];
     tSpan = [0, constants.simulationTime * 24 * 3600]; % Zeitspanne (in Sekunden)
 
     % Integrationseinstellungen
@@ -20,9 +22,9 @@ function [abstand, flight_time] = Trajektorie1(v0, constants)
     %pos_sonde_norm = norm(pos_sonde)
     %disp(te);
     if isempty(te)
-        abstand = Inf;
+        abstand = 1e12;
         v = v0;
-        flight_time = Inf;
+        flight_time = 1e12;
         % fprintf("V_0: %.2f\n", v);
     else
         [~, position_mars] = positionsCalcPlanets(constants, te);

@@ -1,47 +1,55 @@
 function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSystemSonde(constants, t, u, flight_time)
-    
-    t_planeten = t /(24*3600);
 
-     % Preallocate arrays for orbits
-    earthOrbit = zeros(length(t_planeten));
-    marsOrbit = [];
+    % Convert time to days
+    t_planeten = t / (24 * 3600);
     
+    % Preallocate arrays for orbits
+    %num_steps = round(length(t_planeten)/4);
+    num_steps = length(t_planeten);
+    earthOrbit = zeros(num_steps, 2); % 2 columns for x and y coordinates
+    marsOrbit = zeros(num_steps, 2);
+
     % Loop through time steps in t_planeten
-    for i = length(t_planeten)
-        t = t_planeten(i);
+    for i = 1:num_steps
+        t_curr = t_planeten(i);
         % Calculate positions of Earth and Mars
-        [earth_position, mars_position] = positionsCalcPlanets(constants, t);
+        [earth_position, mars_position] = positionsCalcPlanets(constants, t_curr);
         
-        % Append the positions to the respective orbit arrays
-        earthOrbit = [earthOrbit; earth_position];
-        marsOrbit = [marsOrbit; mars_position];
+        % Store the positions in the respective orbit arrays
+        earthOrbit(i, :) = earth_position;
+        marsOrbit(i, :) = mars_position;
     end
 
-
-
-
+    % Plot the orbits
     figure;
     hold on;
-    plot(earthOrbit(:, 1), earthOrbit(:, 2), 'b', 'DisplayName', 'Erd Umlaufbahn');
-    plot(marsOrbit(:, 1), marsOrbit(:, 2), 'r', 'DisplayName', 'Mars Umlaufbahn');
-    plot(u(:,1), u(:,2), 'g', 'DisplayName', 'Sonde Umlaufbahn');
-    plot(0, 0, 'yo', 'MarkerSize', 10,'MarkerFaceColor', 'yellow', 'DisplayName', 'Sonne'); % Sun at origin
+    plot(earthOrbit(:, 1), earthOrbit(:, 2), 'b', 'DisplayName', 'Earth Orbit');
+    plot(marsOrbit(:, 1), marsOrbit(:, 2), 'r', 'DisplayName', 'Mars Orbit');
+    plot(u(:, 1), u(:, 2), 'g', 'DisplayName', 'Spacecraft Trajectory');
+    plot(0, 0, 'yo', 'MarkerSize', 10, 'MarkerFaceColor', 'yellow', 'DisplayName', 'Sun'); % Sun at origin
     axis equal;
     grid on;
     legend;
-    title('Umlaufbahnen von der Erde und Mars');
+    title('Orbits of Earth, Mars, and the Spacecraft');
     xlabel('x (km)');
     ylabel('y (km)');
-    hold on;
 
-   % Animation
-    earth = plot(earthOrbit(1,1), earthOrbit(1,2), 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'blue', 'DisplayName','Erde');
-    mars = plot(marsOrbit(1,1), marsOrbit(1,2), 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'red', 'DisplayName','Mars');
-    sonde = plot(u(1,1), u(1,2), 'go', 'MarkerSize', 8, 'MarkerFaceColor', 'green', 'DisplayName','Sonde');
-    for i = 2:flight_time
-        set(earth, 'XData', earthOrbit(i,1), 'YData', earthOrbit(i,2));
-        set(mars, 'XData', marsOrbit(i,1), 'YData', marsOrbit(i,2));
-        set(sonde, 'XData', u_interp(i,1), 'YData', u_interp(i,2));
-        pause(0.01);
+    % Preallocate plot objects (already done in your code)
+    earth = plot(earthOrbit(1, 1), earthOrbit(1, 2), 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'blue', 'DisplayName', 'Earth');
+    mars = plot(marsOrbit(1, 1), marsOrbit(1, 2), 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'red', 'DisplayName', 'Mars');
+    sonde = plot(u(1, 1), u(1, 2), 'go', 'MarkerSize', 8, 'MarkerFaceColor', 'green', 'DisplayName', 'Spacecraft');
+    
+    % Fix axis limits for faster rendering
+    axis([xmin xmax ymin ymax]);
+    
+    % Loop through animation
+    for i = 2:10:num_steps  % Use step_size = 10 for faster updates
+        % Update positions for animation
+        set(earth, 'XData', earthOrbit(i, 1), 'YData', earthOrbit(i, 2));
+        set(mars, 'XData', marsOrbit(i, 1), 'YData', marsOrbit(i, 2));
+        set(sonde, 'XData', u(i, 1), 'YData', u(i, 2));
+        
+        % Efficient figure update
+        drawnow limitrate;
     end
 end

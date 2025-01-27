@@ -19,7 +19,7 @@ constants.G = 6.67430e-20;
 
 
 
-constants.simulationTime = 365.25*10;
+constants.simulationTime = 365.25*20;
 constants.timeStep = 1;
 
 
