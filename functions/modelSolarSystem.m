@@ -45,6 +45,6 @@ function [earthOrbit, marsOrbit, position_earth, position_mars] = modelSolarSyst
     for i = 2:constants.simulationTime
         set(earth, 'XData', earthOrbit(i,1), 'YData', earthOrbit(i,2));
         set(mars, 'XData', marsOrbit(i,1), 'YData', marsOrbit(i,2));
-        pause(0.01);
+        drawnow;
     end
 end
